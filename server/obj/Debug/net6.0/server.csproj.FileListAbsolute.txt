@@ -1,0 +1,15 @@
+D:\SanayM\FileTransfer\consoleApp\server\server\bin\Debug\net6.0\server.exe
+D:\SanayM\FileTransfer\consoleApp\server\server\bin\Debug\net6.0\server.deps.json
+D:\SanayM\FileTransfer\consoleApp\server\server\bin\Debug\net6.0\server.runtimeconfig.json
+D:\SanayM\FileTransfer\consoleApp\server\server\bin\Debug\net6.0\server.dll
+D:\SanayM\FileTransfer\consoleApp\server\server\bin\Debug\net6.0\server.pdb
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.csproj.AssemblyReference.cache
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.GeneratedMSBuildEditorConfig.editorconfig
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.AssemblyInfoInputs.cache
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.AssemblyInfo.cs
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.csproj.CoreCompileInputs.cache
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.dll
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\refint\server.dll
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.pdb
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\server.genruntimeconfig.cache
+D:\SanayM\FileTransfer\consoleApp\server\server\obj\Debug\net6.0\ref\server.dll
