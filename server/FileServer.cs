@@ -10,20 +10,20 @@ class FileServer
         private static readonly LogData LogData = new LogData();
         private readonly string _saveDirectory;
         private readonly int _fileTransferPort;
-        private readonly int _heartbeatPort;
+        private readonly int _pingPort;
 
-        public FileServer(string saveDirectory, int fileTransferPort, int heartbeatPort)
+        public FileServer(string saveDirectory, int fileTransferPort, int pingPort)
         {
             _saveDirectory = saveDirectory;
             _fileTransferPort = fileTransferPort;
-            _heartbeatPort = heartbeatPort;
+            _pingPort = pingPort;
             Directory.CreateDirectory(_saveDirectory);
         }
 
         public void Start()
         {
             Task.Run(() => StartFileTransferListener());
-            Task.Run(() => StartHeartbeatListener());
+            Task.Run(() => StartPingListener());
         }
 
         private async Task StartFileTransferListener()
@@ -35,22 +35,22 @@ class FileServer
             while (true)
             {
                 var client = await fileListener.AcceptTcpClientAsync();
-                LogData.Log("File transfer client connected.");
+                LogData.Log($"File transfer client connected.");
                 _ = HandleFileTransferClientAsync(client);
             }
         }
 
-        private async Task StartHeartbeatListener()
+        private async Task StartPingListener()
         {
-            var heartbeatListener = new TcpListener(IPAddress.Any, _heartbeatPort);
-            heartbeatListener.Start();
-            LogData.Log($"Heartbeat server started on port {_heartbeatPort}");
+            var pingListener = new TcpListener(IPAddress.Any, _pingPort);
+            pingListener.Start();
+            LogData.Log($"ping server started on port {_pingPort}");
 
             while (true)
             {
-                var client = await heartbeatListener.AcceptTcpClientAsync();
-                LogData.Log("Heartbeat client connected.");
-                _ = HandleHeartbeatClientAsync(client);
+                var client = await pingListener.AcceptTcpClientAsync();
+                LogData.Log("ping client connected.");
+                _ = HandlePingClientAsync(client);
             }
         }
 
@@ -105,7 +105,7 @@ class FileServer
 
             var fullPath = Path.Combine(_saveDirectory, fileName);
 
-            Log($"Received file request for: {fileName}, size: {clientFileSizeStr} bytes");
+            LogData.Log($"Received file request for: {fileName}, size: {clientFileSizeStr} bytes");
 
             FileInfo fileInfo = new FileInfo(fullPath);
 
@@ -113,7 +113,7 @@ class FileServer
             if (fileInfo.Exists)
             {
                 serverFileSize = fileInfo.Length;
-                Log($"File exists. Sending file size: {serverFileSize} bytes");
+                LogData.Log($"File exists. Sending file size: {serverFileSize} bytes");
             }
 
             byte[] fileSizeBytes = BitConverter.GetBytes(serverFileSize);
@@ -121,7 +121,7 @@ class FileServer
 
             if (serverFileSize < clientFileSize)
             {
-                Log($"Receiving file from client. Starting at byte: {serverFileSize}");
+                LogData.Log($"Receiving file from client. Starting at byte: {serverFileSize}");
                 await using var fileStream = new FileStream(fullPath, FileMode.Append, FileAccess.Write);
                 {
                     byte[] buffer = new byte[4096];
@@ -135,7 +135,7 @@ class FileServer
                     }
                 }
 
-                Log($"File transfer complete. File saved to {fullPath}");
+                LogData.Log($"File transfer complete. File saved to {fullPath}");
             }
         }
     }
@@ -151,7 +151,7 @@ class FileServer
 
         
 
-        private async Task HandleHeartbeatClientAsync(TcpClient client)
+        private async Task HandlePingClientAsync(TcpClient client)
         {
             await using var networkStream = client.GetStream();
             using var reader = new StreamReader(networkStream, Encoding.UTF8);
@@ -165,7 +165,7 @@ class FileServer
 
                     if (message.Equals("ping", StringComparison.Ordinal))
                     {
-                        LogData.Log($"[{DateTime.Now}] Ping received.");
+                        LogData.Log($"Ping received.");
                         byte[] pongMessage = Encoding.UTF8.GetBytes("pong\n");
                         await networkStream.WriteAsync(pongMessage, 0, pongMessage.Length);
                     }
@@ -173,7 +173,7 @@ class FileServer
             }
             catch (Exception ex)
             {
-                LogData.Log($"Error handling heartbeat: {ex.Message}");
+                LogData.Log($"Error handling ping: {ex.Message}");
             }
             finally
             {
@@ -201,11 +201,6 @@ class FileServer
             {
                 LogData.Log($"An error occurred while writing to log file: {ex.Message}");
             }
-        }
-        private static void Log(string message)
-        {
-            LogData.Log($"[{DateTime.Now}] {message}");
-            // Additional logging to file can be implemented here.
         }
     }
 

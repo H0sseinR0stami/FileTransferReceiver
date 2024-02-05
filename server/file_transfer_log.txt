@@ -1,1 +1,62 @@
-2/5/2024 9:40:39 AM: Heartbeat server started on port 1235
+2/5/2024 10:06:42 AM: Server is running on 192.168.224.1.
+2/5/2024 10:06:42 AM: ping server started on port 1235
+2/5/2024 10:06:42 AM: File transfer server started on port 1234
+2/5/2024 10:07:10 AM: File transfer client connected.
+2/5/2024 10:07:10 AM: ping client connected.
+2/5/2024 10:07:10 AM: Ping received.
+2/5/2024 10:07:10 AM: Received file request for: 008 GET Implementations.mp4, size: 46401507 bytes
+2/5/2024 10:07:10 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:10 AM: Ping received.
+2/5/2024 10:07:10 AM: Ping received.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: File transfer complete. File saved to C:\ReceivedFolder\008 GET Implementations.mp4
+2/5/2024 10:07:11 AM: File transfer client connected.
+2/5/2024 10:07:11 AM: ping client connected.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: Received file request for: 009 POST Implementations.mp4, size: 17442029 bytes
+2/5/2024 10:07:11 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: File transfer complete. File saved to C:\ReceivedFolder\009 POST Implementations.mp4
+2/5/2024 10:07:11 AM: File transfer client connected.
+2/5/2024 10:07:11 AM: ping client connected.
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:11 AM: Received file request for: 010 PUT Implementations.mp4, size: 15291718 bytes
+2/5/2024 10:07:11 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:11 AM: Ping received.
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: File transfer complete. File saved to C:\ReceivedFolder\010 PUT Implementations.mp4
+2/5/2024 10:07:12 AM: File transfer client connected.
+2/5/2024 10:07:12 AM: ping client connected.
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: Received file request for: 011 DELETE Implementations.mp4, size: 8526725 bytes
+2/5/2024 10:07:12 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: File transfer complete. File saved to C:\ReceivedFolder\011 DELETE Implementations.mp4
+2/5/2024 10:07:12 AM: File transfer client connected.
+2/5/2024 10:07:12 AM: ping client connected.
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: Received file request for: 012 Summary.mp4, size: 1546962 bytes
+2/5/2024 10:07:12 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: File transfer complete. File saved to C:\ReceivedFolder\012 Summary.mp4
+2/5/2024 10:07:12 AM: File transfer client connected.
+2/5/2024 10:07:12 AM: ping client connected.
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: Received file request for: 006 ConnectionString & Adding the DbContext.mp4, size: 30383318 bytes
+2/5/2024 10:07:12 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:12 AM: Ping received.
+2/5/2024 10:07:13 AM: Ping received.
+2/5/2024 10:07:13 AM: Ping received.
+2/5/2024 10:07:13 AM: File transfer complete. File saved to C:\ReceivedFolder\006 ConnectionString & Adding the DbContext.mp4
+2/5/2024 10:07:13 AM: File transfer client connected.
+2/5/2024 10:07:13 AM: ping client connected.
+2/5/2024 10:07:13 AM: Ping received.
+2/5/2024 10:07:13 AM: Received file request for: 007 First Migration.mp4, size: 20010262 bytes
+2/5/2024 10:07:13 AM: Receiving file from client. Starting at byte: 0
+2/5/2024 10:07:13 AM: Ping received.
+2/5/2024 10:07:13 AM: Ping received.
+2/5/2024 10:07:13 AM: File transfer complete. File saved to C:\ReceivedFolder\007 First Migration.mp4
