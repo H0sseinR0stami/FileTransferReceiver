@@ -1,25 +1,32 @@
-﻿internal static class Program
+﻿
+namespace server;
+
+internal static class Program
 {
+    private static readonly LogData LogData = new LogData();
+    private static readonly Configuration Config = new Configuration("../../../config.txt");
+    private static readonly int FileTransferPort = Config.GetIntValue("fileTransferPort");
+    private static readonly int PingPort = Config.GetIntValue("pingPort");   
+    private static readonly string RelativePath = Config.GetOsDependentPath();
+    
+    
     private static async Task Main(string[] args)
     {
-        const int fileTransferPort = 1234; // Port for file transfers
-        const int heartbeatPort = 1235;    // Separate port for heartbeat messages
-        const string relativePath = @"C:\ReceivedFolder"; // Relative path for the save directory
-        //const string relativePath = @"/home/manager/ReceivedFile"; // Alternative path for Unix-based systems
-
-        string saveDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+        
+        string saveDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RelativePath);
 
         // Check if the folder exists, if not, create it
         if (!Directory.Exists(saveDirectory))
         {
             Directory.CreateDirectory(saveDirectory);
-            Console.WriteLine($"Folder created at: {saveDirectory}");
+            LogData.Log($"Folder created at: \"{saveDirectory}\"");
         }
 
-        var server = new FileServer(saveDirectory, fileTransferPort, heartbeatPort);
+        var server = new FileServer(saveDirectory, FileTransferPort, PingPort);
         server.Start(); // Start the server to listen on both ports
 
-        Console.WriteLine("Server is running. Press Enter to exit.");
+        var ipAddress = Config.GetLocalIPAddress(); 
+        LogData.Log($"Server is running on {ipAddress}.");
         Console.ReadLine(); // Keep the server running until Enter is pressed
     }
 }

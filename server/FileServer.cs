@@ -2,11 +2,12 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using server;
 
 
-
-    class FileServer
+class FileServer
     {
+        private static readonly LogData LogData = new LogData();
         private readonly string _saveDirectory;
         private readonly int _fileTransferPort;
         private readonly int _heartbeatPort;
@@ -29,12 +30,12 @@ using System.Text;
         {
             var fileListener = new TcpListener(IPAddress.Any, _fileTransferPort);
             fileListener.Start();
-            Console.WriteLine($"File transfer server started on port {_fileTransferPort}");
+            LogData.Log($"File transfer server started on port {_fileTransferPort}");
 
             while (true)
             {
                 var client = await fileListener.AcceptTcpClientAsync();
-                Console.WriteLine("File transfer client connected.");
+                LogData.Log("File transfer client connected.");
                 _ = HandleFileTransferClientAsync(client);
             }
         }
@@ -43,12 +44,12 @@ using System.Text;
         {
             var heartbeatListener = new TcpListener(IPAddress.Any, _heartbeatPort);
             heartbeatListener.Start();
-            Console.WriteLine($"Heartbeat server started on port {_heartbeatPort}");
+            LogData.Log($"Heartbeat server started on port {_heartbeatPort}");
 
             while (true)
             {
                 var client = await heartbeatListener.AcceptTcpClientAsync();
-                Console.WriteLine("Heartbeat client connected.");
+                LogData.Log("Heartbeat client connected.");
                 _ = HandleHeartbeatClientAsync(client);
             }
         }
@@ -57,7 +58,7 @@ using System.Text;
 {
     if (client == null || !client.Connected)
     {
-        Console.WriteLine("Client is not connected.");
+        LogData.Log("Client is not connected.");
         return;
     }
 
@@ -67,7 +68,7 @@ using System.Text;
         networkStream = client.GetStream();
         if (networkStream == null)
         {
-            Console.WriteLine("Network stream is null.");
+            LogData.Log("Network stream is null.");
             return;
         }
 
@@ -79,7 +80,7 @@ using System.Text;
             var metadataLine = await reader.ReadLineAsync();
             if (string.IsNullOrEmpty(metadataLine))
             {
-                Console.WriteLine("Metadata is null or empty.");
+                LogData.Log("Metadata is null or empty.");
                 return;
             }
 
@@ -89,7 +90,7 @@ using System.Text;
 
             if (fileNamePart == null || sizePart == null)
             {
-                Console.WriteLine("Invalid metadata received.");
+                LogData.Log("Invalid metadata received.");
                 return;
             }
 
@@ -98,7 +99,7 @@ using System.Text;
 
             if (!long.TryParse(clientFileSizeStr, out long clientFileSize))
             {
-                Console.WriteLine("Invalid file size in metadata.");
+                LogData.Log("Invalid file size in metadata.");
                 return;
             }
 
@@ -140,7 +141,7 @@ using System.Text;
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error handling file transfer: {ex.Message}");
+        LogData.Log($"Error handling file transfer: {ex.Message}");
     }
     finally
     {
@@ -164,7 +165,7 @@ using System.Text;
 
                     if (message.Equals("ping", StringComparison.Ordinal))
                     {
-                        Console.WriteLine($"[{DateTime.Now}] Ping received.");
+                        LogData.Log($"[{DateTime.Now}] Ping received.");
                         byte[] pongMessage = Encoding.UTF8.GetBytes("pong\n");
                         await networkStream.WriteAsync(pongMessage, 0, pongMessage.Length);
                     }
@@ -172,7 +173,7 @@ using System.Text;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error handling heartbeat: {ex.Message}");
+                LogData.Log($"Error handling heartbeat: {ex.Message}");
             }
             finally
             {
@@ -190,20 +191,20 @@ using System.Text;
             }
             catch (IOException ioEx)
             {
-                Console.WriteLine($"I/O Error while writing to log file: {ioEx.Message}");
+                LogData.Log($"I/O Error while writing to log file: {ioEx.Message}");
             }
             catch (UnauthorizedAccessException uaEx)
             {
-                Console.WriteLine($"Access Error while writing to log file: {uaEx.Message}");
+                LogData.Log($"Access Error while writing to log file: {uaEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while writing to log file: {ex.Message}");
+                LogData.Log($"An error occurred while writing to log file: {ex.Message}");
             }
         }
         private static void Log(string message)
         {
-            Console.WriteLine($"[{DateTime.Now}] {message}");
+            LogData.Log($"[{DateTime.Now}] {message}");
             // Additional logging to file can be implemented here.
         }
     }
