@@ -4,3 +4,4 @@ linuxPath=/home/manager/ReceivedFile
 fileTransferPort = 1234
 pingPort = 1235
 logFilePath = ../../../file_transfer_log.txt
+fileBufferSize = 4096
