@@ -8,10 +8,11 @@ using server;
 class FileServer
     {
         private static readonly LogData LogData = new LogData();
+        private static readonly Configuration Config = new Configuration("../../../config.txt");
         private readonly string _saveDirectory;
         private readonly int _fileTransferPort;
         private readonly int _pingPort;
-
+        private readonly int _fileBufferSize = Config.GetIntValue("fileBufferSize");
         public FileServer(string saveDirectory, int fileTransferPort, int pingPort)
         {
             _saveDirectory = saveDirectory;
@@ -124,14 +125,14 @@ class FileServer
                 LogData.Log($"Receiving file from client. Starting at byte: {serverFileSize}");
                 await using var fileStream = new FileStream(fullPath, FileMode.Append, FileAccess.Write);
                 {
-                    byte[] buffer = new byte[4096];
+                    byte[] buffer = new byte[_fileBufferSize];
                     int bytesRead;
                     long totalReceived = 0;
                     while ((bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
                         await fileStream.WriteAsync(buffer, 0, bytesRead);
                         totalReceived += bytesRead;
-                        //Log($"Received {serverFileSize+totalReceived} of {clientFileSize} bytes");
+                        //LogData.Log($"Received {serverFileSize+totalReceived} of {clientFileSize} bytes");
                     }
                 }
 
